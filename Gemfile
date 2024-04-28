@@ -3,6 +3,7 @@
 source "https://rubygems.org"
 
 gem 'rspec', '~> 3.13'
+gem 'date', '~> 3.3', '>= 3.3.4'
 gem 'httparty', '~> 0.21.0'
 gem 'json', '~> 2.7', '>= 2.7.2'
 gem 'sinatra', '~> 4.0'

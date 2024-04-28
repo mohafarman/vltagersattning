@@ -1,6 +1,7 @@
 # lib/tui.rb
 require 'terminal-table'
 require 'pastel'
+require 'date'
 
 module Vltagersattning
   class Tui
@@ -10,18 +11,27 @@ module Vltagersattning
     def main_menu
       # Welcoming message
       pastel = Pastel.new
-      puts pastel.red.on_white.bold("\t VL Tågersättning ")
+      puts pastel.red.on_white.bold("\t\t VL Tågersättning ")
       puts pastel.black.on_white("\t Välkommen till vltagersattning. Expressersättning! ")
       puts pastel.black.on_white("\t Skapad och underhålls av Mohamad Farman ")
 
-      select_location_from
+      location_signature = select_location_from
+
+      date = select_date
+
+      return location_signature, date
     end
 
     private
 
     def select_location_from
+      pastel = Pastel.new
+
       input = nil
       location = nil
+      msg_from = pastel.black.on_white.bold.underline(" From ")
+      msg_choice = pastel.black.on_white("Var god välj stationen du reser från:")
+      msg_error = pastel.red.on_white("Fel inmatning. Var god välj en station från 1 till 25.")
 
       locations = {"Sl"=>"Sala",
                    "Rt"=>"Ransta",
@@ -57,23 +67,49 @@ module Vltagersattning
         rows << item
       }
 
-      table = Terminal::Table.new :title => "Från (from)", :rows => rows
+      table = Terminal::Table.new :title => msg_from, :rows => rows
       puts table
 
       loop do
-        puts "Var god välj stationen du reser från:"
+        puts msg_choice
         input = gets.chomp.to_i
 
         if (1..25).include?(input)
           location = locations_table[input - 1][1]
           break
         else
-          puts "Invalid input. Please enter a number between 1 and 25."
+          puts msg_error
         end
       end
 
       # Returns the location_signature for the selected location
       locations.key(location)
+    end
+
+    def select_date
+      pastel = Pastel.new
+
+      msg_choice = pastel.black.on_white("Välj datum för när resan inträffade (år/månad/dag, ex. 2024/02/24):")
+      msg_choice2 = pastel.black.on_white( "(Alternativt: 1 = idag, 2 = igår)")
+      date = nil
+
+      loop do
+        puts msg_choice
+        puts msg_choice2
+        input = gets.chomp.to_s
+
+        if 1 == input.to_i
+          date = Date.today.strftime("%Y/%m/%d")
+          break
+        elsif 2 == input.to_i
+          date = Date.today.prev_day.strftime("%Y/%m/%d")
+          break
+        else
+          # TODO: Validate date
+        end
+      end
+
+      date
     end
   end
 end

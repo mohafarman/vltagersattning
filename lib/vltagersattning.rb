@@ -14,4 +14,8 @@ module Vltagersattning
   end
 end
 
-Vltagersattning.initialize
+# Vltagersattning.initialize
+main = Vltagersattning::Tui.new
+signature_location, date = main.main_menu
+
+user = Vltagersattning::User.new(signature_location, date)

@@ -22,5 +22,4 @@ signature_location, date = main.main_menu
 
 user = Vltagersattning::User.new(signature_location, date)
 
-api = Vltagersattning::TrafikverketApi.new(user.
-from, user.date)
+api = Vltagersattning::TrafikverketApi.new(user.from, user.date)

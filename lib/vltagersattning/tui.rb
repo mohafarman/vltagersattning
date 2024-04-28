@@ -89,12 +89,13 @@ module Vltagersattning
     def select_date
       pastel = Pastel.new
 
-      msg_choice = pastel.black.on_white("Välj datum för när resan inträffade (år/månad/dag, ex. 2024/02/24):")
+      msg_choice = pastel.black.on_white("Välj datum för när resan inträffade (dd-mm-yyyy, ex. 05-02-2024:")
       msg_choice2 = pastel.black.on_white( "(Alternativt: 1 = idag, 2 = igår)")
+      msg_error = pastel.red.on_white("Fel inmatning. dd-mm-yyyy. Försök igen:")
       date = nil
 
+      puts msg_choice
       loop do
-        puts msg_choice
         puts msg_choice2
         input = gets.chomp.to_s
 
@@ -104,12 +105,16 @@ module Vltagersattning
         elsif 2 == input.to_i
           date = Date.today.prev_day.strftime("%Y/%m/%d")
           break
+        elsif Vltagersattning::Misc.valid_date?(input)
+          date = input
+          break
         else
-          # TODO: Validate date
+          puts msg_error
         end
       end
 
       date
     end
+
   end
 end

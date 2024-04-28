@@ -1,6 +1,7 @@
 # lib/vltagersattning.rb
 require_relative 'vltagersattning/tui'
 require_relative 'vltagersattning/user'
+require_relative 'vltagersattning/misc'
 require_relative 'vltagersattning/trafikverket_api'
 
 module Vltagersattning

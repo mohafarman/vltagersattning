@@ -15,8 +15,12 @@ module Vltagersattning
   end
 end
 
-# Vltagersattning.initialize
+# TODO: First time launch of program should generate a file to keep the API key for the user
+
 main = Vltagersattning::Tui.new
 signature_location, date = main.main_menu
 
 user = Vltagersattning::User.new(signature_location, date)
+
+api = Vltagersattning::TrafikverketApi.new(user.
+from, user.date)

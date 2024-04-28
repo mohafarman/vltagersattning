@@ -100,13 +100,13 @@ module Vltagersattning
         input = gets.chomp.to_s
 
         if 1 == input.to_i
-          date = Date.today.strftime("%Y/%m/%d")
+          date = Date.today.strftime('%Y/%m/%d')
           break
         elsif 2 == input.to_i
-          date = Date.today.prev_day.strftime("%Y/%m/%d")
+          date = Date.today.prev_day.strftime('%Y/%m/%d')
           break
         elsif Vltagersattning::Misc.valid_date?(input)
-          date = input
+          date = Vltagersattning::Misc.parse_date(input)
           break
         else
           puts msg_error

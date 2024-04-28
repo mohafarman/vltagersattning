@@ -1,9 +1,9 @@
 # lib/user.rb
 
 module Vltagersattning
-  attr_reader :from, :date
-
   class User
+    attr_reader :from, :date
+
     def initialize(from, date)
       @from = from
       @date = date

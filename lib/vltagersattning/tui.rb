@@ -22,6 +22,15 @@ module Vltagersattning
       return location_signature, date
     end
 
+    def display_delayed_canceled_trains(trains)
+      rows = []
+
+      trains.keys.map.with_index { |v, i| rows << [i + 1, v] }
+
+      table = Terminal::Table.new :rows => rows
+      puts table
+    end
+
     private
 
     def select_location_from

@@ -16,10 +16,16 @@ module Vltagersattning
 end
 
 # TODO: First time launch of program should generate a file to keep the API key for the user
+# TODO: Allow user to specify train Id to retrieve the necessary information
+# rather than selecting from a menu
 
-main = Vltagersattning::Tui.new
-signature_location, date = main.main_menu
+tui = Vltagersattning::Tui.new
+signature_location, date = tui.main_menu
 
 user = Vltagersattning::User.new(signature_location, date)
 
 api = Vltagersattning::TrafikverketApi.new(user.from, user.date)
+
+trains = api.get_trains
+
+tui.display_delayed_canceled_trains(trains)
